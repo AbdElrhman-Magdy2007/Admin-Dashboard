@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -7,15 +6,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DailySales } from "@/data/types";
-import { 
+import {
   LineChart,
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
-  TooltipProps
 } from "recharts";
 import { format, parseISO } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -35,7 +33,51 @@ export const SalesChart = ({
   className,
 }: SalesChartProps) => {
   const isMobile = useIsMobile();
-  
+
+  // Sort data by date to ensure chronological order
+  const sortedData = [...data].sort((a, b) => {
+    return parseISO(a.date).getTime() - parseISO(b.date).getTime();
+  });
+
+  // Custom tick formatter to handle month transitions
+  const tickFormatter = (dateStr: string, index: number) => {
+    const date = parseISO(dateStr);
+    const prevDate = index > 0 ? parseISO(sortedData[index - 1].date) : null;
+    // Show month name for the first day of a new month or if month changes
+    if (
+      !prevDate ||
+      prevDate.getMonth() !== date.getMonth() ||
+      date.getDate() === 1
+    ) {
+      return format(date, isMobile ? "MMM d" : "MMM d");
+    }
+    return format(date, isMobile ? "d" : "d");
+  };
+
+  // Custom Tooltip
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const date = parseISO(label);
+      return (
+        <div
+          className="rounded-md border bg-background p-3 shadow-sm"
+          style={{
+            border: "1px solid var(--border)",
+            fontSize: isMobile ? "12px" : "14px",
+          }}
+        >
+          <p className="font-medium">{format(date, "MMMM d, yyyy")}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} style={{ color: entry.color || "hsl(var(--primary))" }}>
+              {entry.name}: ${entry.value}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className={cn("col-span-3", className)}>
       <CardHeader>
@@ -45,7 +87,7 @@ export const SalesChart = ({
       <CardContent className="w-full aspect-[3/1] md:aspect-[3/1] sm:aspect-[2/1]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={data}
+            data={sortedData}
             margin={{
               top: 5,
               right: isMobile ? 5 : 10,
@@ -53,40 +95,27 @@ export const SalesChart = ({
               bottom: 5,
             }}
           >
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <XAxis 
-              dataKey="date" 
-              tickFormatter={(str) => {
-                const date = parseISO(str);
-                return format(date, isMobile ? "M/d" : "MMM d");
-              }}
+            <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.3} />
+            <XAxis
+              dataKey="date"
+              tickFormatter={tickFormatter}
               tickLine={false}
               axisLine={false}
               tick={{ fontSize: isMobile ? 10 : 12 }}
-              interval={isMobile ? "preserveStartEnd" : 0}
+              interval={isMobile ? Math.floor(sortedData.length / 5) : Math.floor(sortedData.length / 10)}
             />
-            <YAxis 
+            <YAxis
               tickFormatter={(value) => `$${value}`}
               tickLine={false}
               axisLine={false}
               tick={{ fontSize: isMobile ? 10 : 12 }}
               width={isMobile ? 35 : 45}
             />
-            <Tooltip 
-              formatter={(value) => [`$${value}`, 'Sales']}
-              labelFormatter={(label) => format(parseISO(label), "MMMM d, yyyy")}
-              contentStyle={{
-                backgroundColor: 'var(--background)',
-                border: '1px solid var(--border)',
-                borderRadius: '0.375rem',
-                boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-                padding: isMobile ? '8px' : '10px',
-                fontSize: isMobile ? '12px' : '14px',
-              }}
-            />
+            <Tooltip content={<CustomTooltip />} formatter={(value) => [`$${value}`, "Sales"]} />
             <Line
               type="monotone"
               dataKey="amount"
+              name="Sales"
               stroke="hsl(var(--primary))"
               strokeWidth={2}
               dot={false}
