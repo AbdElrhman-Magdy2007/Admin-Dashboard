@@ -32,10 +32,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
       <div 
         className={`flex-1 transition-all duration-300 ease-in-out ${
           sidebarOpen && !isMobile ? 'ml-64' : 'ml-0'
-        }`}
+        } flex flex-col`}
       >
         <MainHeader onToggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-        <main className="p-2 sm:p-4 md:p-6">
+        <main className="flex-1 p-3 sm:p-4 md:p-6">
           {children}
         </main>
       </div>
