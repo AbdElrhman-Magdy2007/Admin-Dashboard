@@ -1,73 +1,108 @@
-# Welcome to your Lovable project
+Admin Dashboard
+A modern, responsive, and feature-rich Admin Dashboard built with React, TypeScript, and Tailwind CSS. This project provides a comprehensive interface for managing customers, orders, and analytics, with a focus on usability, performance, and scalability.
+Table of Contents
 
-## Project info
+Features
+Technologies
+Installation
+Usage
+Project Structure
+Contributing
+License
 
-**URL**: https://lovable.dev/projects/ab818700-917a-4571-bc78-3a327db72a78
+Features
 
-## How can I edit this code?
+Customer Dashboard: Manage customer information with search, filter, sort, and bulk actions (export/delete). Fully responsive for mobile, tablet, and desktop screens.
+Responsive Design: Optimized layouts for all screen sizes using Tailwind CSS.
+Interactive UI: Includes pagination, loading states, and toast notifications for user actions.
+Type Safety: Built with TypeScript for robust type checking and maintainability.
+Mock Data: Uses mock customer data for development and testing purposes.
+Accessibility: Follows best practices for ARIA labels and keyboard navigation.
 
-There are several ways of editing your application.
+Technologies
 
-**Use Lovable**
+React: Frontend library for building user interfaces.
+TypeScript: Adds static types to JavaScript for better tooling and reliability.
+Tailwind CSS: Utility-first CSS framework for rapid and responsive styling.
+Shadcn/UI: Reusable UI components for a consistent design system.
+Lucide Icons: Lightweight and customizable icon library.
+Vite: Fast build tool and development server.
+Lodash: Utility library for debouncing and other helpers.
+Sonner: Toast notification library for user feedback.
+Date-fns: Modern date utility library for formatting.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ab818700-917a-4571-bc78-3a327db72a78) and start prompting.
+Installation
 
-Changes made via Lovable will be committed automatically to this repo.
+Clone the repository:
+git clone https://github.com/AbdElrhman-Magdy2007/polished-panel-craft.git
+cd polished-panel-craft
 
-**Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Install dependencies:
+npm install
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
+Set up environment variables (if applicable):Create a .env file in the root directory and add any required environment variables (e.g., API keys).
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Run the development server:
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+Open http://localhost:5173 in your browser to view the application.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
 
-**Use GitHub Codespaces**
+Usage
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Customer Dashboard: Navigate to the /customers route to view and manage customer data.
+Search: Use the search bar to find customers by name or email.
+Filter: Filter customers by status (All, Active, Inactive).
+Sort: Sort columns (Name, Email, Joined, Orders, Spent) in ascending or descending order.
+Bulk Actions: Select multiple customers to export as CSV or delete.
+Responsive Views: Card view on mobile, table view on tablet/desktop.
 
-## What technologies are used for this project?
 
-This project is built with:
+Toast Notifications: Feedback for actions like viewing, editing, or deleting customers.
+Pagination: Navigate through customer lists with responsive pagination controls.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Project Structure
+polished-panel-craft/
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   │   └── dashboard-layout.tsx
+│   │   ├── ui/
+│   │   │   ├── card.tsx
+│   │   │   ├── table.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── button.tsx
+│   │   │   └── ...
+│   ├── data/
+│   │   ├── mockData.ts
+│   │   └── types.ts
+│   ├── hooks/
+│   │   └── use-mobile.ts
+│   └── pages/
+│       └── Customers.tsx
+├── public/
+├── README.md
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── .gitignore
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/ab818700-917a-4571-bc78-3a327db72a78) and click on Share -> Publish.
+src/components/: Reusable UI components and layouts.
+src/data/: Mock data and TypeScript type definitions.
+src/hooks/: Custom React hooks (e.g., device type detection).
+src/pages/: Page components like the Customer Dashboard.
 
-## Can I connect a custom domain to my Lovable project?
+Contributing
+Contributions are welcome! Please follow these steps:
 
-Yes, you can!
+Fork the repository.
+Create a new branch (git checkout -b feature/your-feature).
+Make your changes and commit (git commit -m "Add your feature").
+Push to the branch (git push origin feature/your-feature).
+Open a Pull Request.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
