@@ -18,20 +18,23 @@ import {
   TooltipProps
 } from "recharts";
 import { format, parseISO } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface SalesChartProps {
   data: DailySales[];
   title?: string;
   description?: string;
+  className?: string;
 }
 
 export const SalesChart = ({
   data,
   title = "Sales Overview",
   description = "Daily sales over the past 30 days",
+  className,
 }: SalesChartProps) => {
   return (
-    <Card className="col-span-3">
+    <Card className={cn("col-span-3", className)}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
