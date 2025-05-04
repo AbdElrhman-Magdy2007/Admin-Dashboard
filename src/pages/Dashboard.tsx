@@ -7,6 +7,7 @@ import { RecentOrders } from "@/components/dashboard/recent-orders";
 import { TopProducts } from "@/components/dashboard/top-products";
 import { mockAnalytics, mockDashboardStats } from "@/data/mockData";
 import { BarChart3, DollarSign, Package, ShoppingCart, Users } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -19,6 +20,7 @@ const formatCurrency = (value: number) => {
 const Dashboard = () => {
   const [stats] = useState(mockDashboardStats);
   const [analytics] = useState(mockAnalytics);
+  const isMobile = useIsMobile();
 
   return (
     <DashboardLayout>
@@ -31,7 +33,7 @@ const Dashboard = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Total Revenue"
             value={formatCurrency(stats.totalRevenue)}
@@ -59,13 +61,13 @@ const Dashboard = () => {
         </div>
 
         {/* Charts and Tables */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        <div className="grid gap-4 grid-cols-1 lg:grid-cols-7">
           <SalesChart 
             data={analytics.salesOverview.dailySales} 
-            className="lg:col-span-4"
+            className="col-span-1 lg:col-span-4"
           />
           
-          <div className="space-y-4 lg:col-span-3">
+          <div className="space-y-4 col-span-1 lg:col-span-3">
             <TopProducts products={analytics.topProducts} />
             <RecentOrders orders={analytics.recentOrders} />
           </div>
